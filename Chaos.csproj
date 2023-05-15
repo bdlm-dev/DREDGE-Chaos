@@ -42,7 +42,7 @@
 			<HintPath>$(DredgePath)\DREDGE_Data\Managed\Unity.Addressables.dll</HintPath>
 		</Reference>
 		<Reference Include="Unity.Localization">
-			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\DREDGE\DREDGE_Data\Managed\Unity.Localization.dll</HintPath>
+			<HintPath>$(DredgePath)\DREDGE_Data\Managed\Unity.Localization.dll</HintPath>
 		</Reference>
 		<Reference Include="Unity.ResourceManager">
 			<HintPath>$(DredgePath)\DREDGE_Data\Managed\Unity.ResourceManager.dll</HintPath>
@@ -54,7 +54,7 @@
 			<HintPath>$(DredgePath)\DREDGE_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
 		</Reference>
 		<Reference Include="Winch">
-			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\DREDGE\Winch.dll</HintPath>
+			<HintPath>$(DredgePath)\Winch.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 
