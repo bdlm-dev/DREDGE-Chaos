@@ -1,0 +1,10 @@
+{
+    "ModAssembly": "Chaos.dll",
+    "Entrypoint": "Chaos.Loader/Start",
+    "Version": "0.0.1",
+    "MinWinchVersion": "alpha-1.4",
+    "ApplyPatches": true,
+    "DefaultConfig": {
+        "secondsBetweenEffects": 15
+    }
+}
