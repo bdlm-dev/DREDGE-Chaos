@@ -6,18 +6,8 @@ using System.Threading.Tasks;
 
 namespace Chaos.Effects;
 
-internal interface IEffect
+public interface IEffect
 {
-    public void Handle(bool flag)
-    {
-        if (flag)
-        {
-            Cleanup();
-            return;
-        }
-        Trigger();
-        return;
-    }
     public void Trigger();
     public void Cleanup();
 }

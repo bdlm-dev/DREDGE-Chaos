@@ -20,6 +20,7 @@ internal class ChaosManager : MonoBehaviour
         chaosConfig = ConfigUtil.GetMainConfig();
         effects = new AllEffects().effects;
         AddTerminalCommands();
+        PlayerUtil.LoadPlayerConfig();
     }
 
     private void AddTerminalCommands()
@@ -29,18 +30,27 @@ internal class ChaosManager : MonoBehaviour
 
     public void CallEffectDebug(CommandArg[] args)
     {
+        WinchCore.Log.Debug($"Calling chaos effect with id ({args[0].String}) via console");
+        CallEffect(args[0].String);
+    }
+
+    public void CallEffect(string id)
+    {
         bool flag = false;
-        WinchCore.Log.Debug($"Calling chaos effect with id ({args[0].String})");
         effects.ForEach(item =>
         {
-            if (item.Key == args[0].String)
+            if (item.Key == id)
             {
                 StartCoroutine(ExecuteEvent(item.Value, Convert.ToInt32(chaosConfig?["secondsBetweenEffects"])));
+                Terminal.Log($"Successfully called effect {item.Key}");
                 flag = true;
             }
         });
-        if (!flag) WinchCore.Log.Debug($"Effect with id ({args[0].String}) not found.");
-        return;
+        if (!flag)
+        {
+            WinchCore.Log.Debug($"Effect with id ({id}) not found.");
+            Terminal.Shell.IssueErrorMessage($"Effect with id ({id}) not found.");
+        }
     }
 
     IEnumerator ExecuteEvent(EffectData e, int delay)

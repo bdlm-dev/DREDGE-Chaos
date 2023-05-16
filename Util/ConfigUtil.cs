@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Winch.Config;
+using Winch.Core;
 
 namespace Chaos.Util;
 
-internal class ConfigUtil
+public class ConfigUtil
 {
     public static Dictionary<string, object?> config = new();
     public static Dictionary<string, object> defaultConfig = new()
@@ -24,5 +25,10 @@ internal class ConfigUtil
         });
 
         return config;
-    } 
+    }
+
+    public static T? GetEffectProperty<T>(string id, string key, T? defaultValue)
+    {
+        return ModConfig.GetProperty("Chaos", key, defaultValue, "Config.json", id);
+    }
 }

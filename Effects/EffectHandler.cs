@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Winch.Core;
 
 namespace Chaos.Effects;
 
-internal class EffectHandler : IEffect
+public class EffectHandler : IEffect
 {
     public void Handle(bool flag)
     {
@@ -19,6 +20,6 @@ internal class EffectHandler : IEffect
         return;
     }
 
-    public void Trigger() {}
-    public void Cleanup() {}
+    public virtual void Trigger() {}
+    public virtual void Cleanup() {}
 }

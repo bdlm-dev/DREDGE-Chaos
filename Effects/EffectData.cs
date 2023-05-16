@@ -24,9 +24,9 @@ public class EffectData
         this.id = id;
         this.name = name;
         this.data = ModConfig.GetFullConfig("Chaos", "Config.json", id);
-        this.category = effectCategory;
-        this.Trigger = () => function(false);
-        this.Cleanup = () => function(true);
+        category = effectCategory;
+        Trigger = () => function(false);
+        Cleanup = () => function(true);
     }
 
     public enum EffectCategory
