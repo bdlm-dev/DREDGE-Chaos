@@ -15,23 +15,21 @@ public class EffectData
     public readonly bool isPatch;
 
     public readonly Dictionary<string, object?> data;
-    public readonly Action Trigger = () => {};
-    public readonly Action Cleanup = () => {};
+    public EffectHandler effectInstance = new();
+    public readonly Action Trigger = () => { };
+    public readonly Action Cleanup = () => { };
 
     public readonly EffectCategory category;
 
-    public EffectData(string id, string name, Action<bool>? function, bool isPatch = false, EffectCategory effectCategory = EffectCategory.GENERIC)
+    public EffectData(string id, string name, EffectHandler effectObject, EffectCategory effectCategory = EffectCategory.GENERIC)
     {
         this.id = id;
         this.name = name;
-        this.isPatch = isPatch;
-        this.data = ModConfig.GetFullConfig("Chaos", "Config.json", id);
+        data = ModConfig.GetFullConfig("Chaos", "Config.json", id);
+        effectInstance = effectObject;
         category = effectCategory;
-        if (function != null)
-        {
-            Trigger = () => function(false);
-            Cleanup = () => function(true);
-        }
+        Trigger = () => effectObject.Handle(false);
+        Cleanup = () => effectObject.Handle(true);
     }
 
     public enum EffectCategory
