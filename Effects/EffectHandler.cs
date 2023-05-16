@@ -9,6 +9,7 @@ namespace Chaos.Effects;
 
 public class EffectHandler : IEffect
 {
+    public List<string> incompatibleEffects = new();
     public void Handle(bool flag)
     {
         if (flag)

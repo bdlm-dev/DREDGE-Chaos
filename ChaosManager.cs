@@ -12,8 +12,9 @@ namespace Chaos;
 
 internal class ChaosManager : MonoBehaviour
 {
-    public static Dictionary<string, EffectData>? effects;
-    public static Dictionary<string, object?>? chaosConfig;
+    public static Dictionary<string, EffectData> effects = new();
+    public static Dictionary<string, object?> chaosConfig = new();
+    public static List<string> activeEffects = new();
     private void Start()
     {
         WinchCore.Log.Debug("Started Chaos Manager");
@@ -58,6 +59,7 @@ internal class ChaosManager : MonoBehaviour
         try
         {
             e.Trigger();
+            activeEffects.Add(e.id);
             WinchCore.Log.Debug($"Triggered event {e.id}");
         }
         catch (Exception ex)
@@ -70,6 +72,7 @@ internal class ChaosManager : MonoBehaviour
         try
         {
             e.Cleanup();
+            activeEffects.Remove(e.id);
             WinchCore.Log.Debug($"Cleaned up event {e.id}");
         }
         catch (Exception ex)
