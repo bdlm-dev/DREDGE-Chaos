@@ -11,6 +11,5 @@ public class AllEffects
     public Dictionary<string, EffectData> effects = new() 
     {
         { "player_speed_boost", new EffectData("player_speed_boost", "Speed Boost", new Player.SpeedBoost().Handle) },
-        { "player_backwards_only", new EffectData("player_backwards_only", "Retreat!", null, true) }
     };
 }
