@@ -16,8 +16,6 @@ public class SpeedBoost : EffectHandler
         this.defaultSpeedMultiplier = Convert.ToSingle(PlayerUtil.defaultPlayerControllerData["_baseMovementModifier"]);
         speedMultiplier = Convert.ToSingle(ConfigUtil.GetEffectProperty(this.id, "speedMultiplier", (double) this.speedMultiplier));
 
-        WinchCore.Log.Debug($"Called speedboost with properties {this.defaultSpeedMultiplier}, {this.speedMultiplier}");
-
         if (PlayerUtil.playerController == null)
         {
             WinchCore.Log.Error("Found null playerController");
