@@ -14,7 +14,7 @@ internal class ChaosManager : MonoBehaviour
 {
     public static Dictionary<string, EffectData> effects = new();
     public static Dictionary<string, object?> chaosConfig = new();
-    public static List<string> activeEffects = new();
+    public static HashSet<string> activeEffects = new();
     private void Start()
     {
         WinchCore.Log.Debug("Started Chaos Manager");
