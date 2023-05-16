@@ -1,7 +1,6 @@
 ﻿using FluffyUnderware.DevTools.Extensions;
 using HarmonyLib;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Winch.Core;
 using System.Threading.Tasks;
@@ -66,7 +65,8 @@ public class PlayerUtil
         }
         else
         {
-            WinchCore.Log.Debug("Failed loading playerStats, retrying...");
+            WinchCore.Log.Debug("Failed loading player, retrying...");
+            Terminal.Log("Failed loading player, retrying...");
             await Task.Delay(3000);
             LoadPlayer();
         }
