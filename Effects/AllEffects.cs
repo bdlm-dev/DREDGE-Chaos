@@ -9,10 +9,24 @@ namespace Chaos.Effects;
 
 public class AllEffects
 {
-    public Dictionary<string, EffectData> effects = new() 
+    private static readonly List<EffectData> effectInfo = new() 
     {
-        { "player_speed_boost", new EffectData("player_speed_boost", "Zoomies", new Player.SpeedBoost(), EffectCategory.PLAYER) },
-        { "player_backwards_only", new EffectData("player_backwards_only", "Retreat", new Player.BackwardsOnly(), EffectCategory.PLAYER) },
-        { "player_forwards_only", new EffectData("player_forwards_only", "Never Surrender", new Player.ForwardsOnly(), EffectCategory.PLAYER) }
+        { new EffectData("speed_boost", "Zoomies", new Player.SpeedBoost(), EffectCategory.PLAYER) },
+        { new EffectData("backwards_only", "Retreat", new Player.BackwardsOnly(), EffectCategory.PLAYER) },
+        { new EffectData("forwards_only", "Never Surrender", new Player.ForwardsOnly(), EffectCategory.PLAYER) },
+        { new EffectData("deja_vu", "Deja Vu", new Player.DejaVu(), EffectCategory.PLAYER) }
     };
+
+    public static Dictionary<string, EffectData> Generate()
+    {
+        Dictionary<string, EffectData> effects = new();
+
+        effectInfo.ForEach(e =>
+        {
+            var generatedId = $"{e.category.ToString().ToLower()}_{e.id}";
+            effects[generatedId] = e;
+        });
+
+        return effects;
+    }
 }

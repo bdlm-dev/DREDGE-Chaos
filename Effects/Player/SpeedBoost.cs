@@ -6,7 +6,7 @@ namespace Chaos.Effects.Player;
 
 public class SpeedBoost : EffectHandler
 {
-    public string id = "player_speed_boost";
+    public string id = "speed_boost";
 
     public float defaultSpeedMultiplier;
     public float speedMultiplier = 5f;

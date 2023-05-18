@@ -2,13 +2,12 @@
 using HarmonyLib;
 using System;
 using UnityEngine;
-using Winch.Core;
 
 namespace Chaos.Effects.Player;
 
 public class BackwardsOnly : EffectHandler
 {
-    public static string id = "player_backwards_only";
+    public static string id = "backwards_only";
 
     [HarmonyPatch(typeof(DredgeInputManager))]
     [HarmonyPatch("GetValue")]
@@ -22,5 +21,14 @@ public class BackwardsOnly : EffectHandler
                 __result.y = Math.Min(__result.y, 0);
             }
         }
+    }
+
+    public override void Trigger()
+    {
+        PlayerUtil.playerController._baseReverseModifier = 1.5f;
+    }
+    public override void Cleanup()
+    {
+        PlayerUtil.playerController._baseReverseModifier = (float) PlayerUtil.defaultPlayerControllerData["_baseReverseModifier"];
     }
 }

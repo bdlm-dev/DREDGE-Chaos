@@ -8,7 +8,7 @@ namespace Chaos.Effects.Player;
 
 public class ForwardsOnly : EffectHandler
 {
-    public static string id = "player_forwards_only";
+    public static string id = "forwards_only";
 
     [HarmonyPatch(typeof(DredgeInputManager))]
     [HarmonyPatch("GetValue")]
