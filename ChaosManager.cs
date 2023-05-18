@@ -74,11 +74,17 @@ internal class ChaosManager : MonoBehaviour
             e.Cleanup();
             activeEffects.Remove(e.id);
             WinchCore.Log.Debug($"Cleaned up event {e.id}");
+
+            GenericCleanup(e);
         }
         catch (Exception ex)
         {
             WinchCore.Log.Debug($"Error while cleaning up event {e.id}: {ex}");
         }
 
+
+    public static void GenericCleanup(EffectData e)
+    {
+        if (e.category == EffectData.EffectCategory.PLAYER) PlayerUtil.RefreshPlayerData();
     }
 }
