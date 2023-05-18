@@ -10,7 +10,7 @@ using System.Collections;
 
 namespace Chaos;
 
-internal class ChaosManager : MonoBehaviour
+public class ChaosManager : MonoBehaviour
 {
     public static Dictionary<string, EffectData> effects = new();
     public static Dictionary<string, object?> chaosConfig = new();
@@ -19,9 +19,9 @@ internal class ChaosManager : MonoBehaviour
     {
         WinchCore.Log.Debug("Started Chaos Manager");
         chaosConfig = ConfigUtil.GetMainConfig();
-        effects = new AllEffects().effects;
+        effects = AllEffects.Generate();
         AddTerminalCommands();
-        PlayerUtil.LoadPlayerConfig();
+        PlayerUtil.Load();
     }
 
     private void AddTerminalCommands()
@@ -31,8 +31,15 @@ internal class ChaosManager : MonoBehaviour
 
     public void CallEffectDebug(CommandArg[] args)
     {
-        WinchCore.Log.Debug($"Calling chaos effect with id ({args[0].String}) via console");
-        CallEffect(args[0].String);
+        if (!activeEffects.Contains(args[0].String)) {
+            WinchCore.Log.Debug($"Calling chaos effect with id ({args[0].String}) via console");
+            CallEffect(args[0].String);
+        } 
+        else
+        {
+            WinchCore.Log.Debug($"Unable to call chaos effect with id ({args[0].String}): Already Active");
+            Terminal.Log($"Unable to call chaos effect with id ({args[0].String}): Already Active");
+        }
     }
 
     public void CallEffect(string id)
@@ -81,6 +88,7 @@ internal class ChaosManager : MonoBehaviour
         {
             WinchCore.Log.Debug($"Error while cleaning up event {e.id}: {ex}");
         }
+    }
 
 
     public static void GenericCleanup(EffectData e)
