@@ -11,8 +11,10 @@ using Winch.Core.API.Events.Addressables;
 
 namespace Chaos;
 
-public class Loader
+public static class Loader
 {
+    public static GameObject? chaosManagerObject;
+    public static ChaosManager? chaosManagerScript;
     public static void Start()
     {
         if (!ModConfig.GetProperty("Chaos", "enabled", true))
@@ -30,7 +32,16 @@ public class Loader
         {
             name = "Chaos Manager"
         };
-        eventManagerObject.AddComponent<ChaosManager>();
-        GameObject.DontDestroyOnLoad(eventManagerObject);
+        chaosManagerScript = eventManagerObject.AddComponent<ChaosManager>();
+
+        if (chaosManagerObject == null)
+        {
+            chaosManagerObject = eventManagerObject;
+        } 
+        else
+        {
+            GameObject.Destroy(chaosManagerObject);
+            chaosManagerObject = eventManagerObject;
+        }
     }
 }
