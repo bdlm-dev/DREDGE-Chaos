@@ -6,6 +6,7 @@ using Winch.Core;
 using System.Threading.Tasks;
 using CommandTerminal;
 using System.Reflection;
+using UnityEngine;
 
 namespace Chaos.Util;
 
@@ -14,19 +15,22 @@ public class PlayerUtil
     public static Dictionary<string, object?> defaultPlayerStatsData = new();
     public static Dictionary<string, object?> defaultPlayerData = new();
     public static Dictionary<string, object?> defaultPlayerControllerData = new();
+    public static Dictionary<string, object?> defaultPlayerCameraData = new();
 
     public static PlayerStats? playerStats { get; set; }
     public static Player? player { get; set; }
     public static PlayerController? playerController { get; set; }
+    public static PlayerCamera? playerCamera { get; set; }
 
 
-    public static void LoadPlayerConfig()
+    public static void Load()
     {
         WinchCore.Log.Debug("Loading default player stats");
         LoadPlayerStats();
         LoadPlayer();
     }
 
+    // move LoadPlayerStats to run inside LoadPlayer so retry unnecessary.
     public static async void LoadPlayerStats()
     {
         var fetchPlayerStats = GameManager.Instance.PlayerStats;
@@ -54,14 +58,8 @@ public class PlayerUtil
             fetchPlayer.GetType().GetProperties().ForEach(field => defaultPlayerData[field.Name] = field.GetValue(fetchPlayer));
             WinchCore.Log.Debug($"Successfully loaded {defaultPlayerData.Count} player stats.");
             Terminal.Log($"[CHAOS] Successfully loaded PLAYER data.");
-            try
-            {
-                LoadPlayerController(fetchPlayer);
-            }
-            catch (Exception ex)
-            {
-                WinchCore.Log.Debug(ex);
-            }
+            LoadPlayerController(fetchPlayer);
+            LoadPlayerCamera();
         }
         else
         {
@@ -88,9 +86,16 @@ public class PlayerUtil
         }
     }
 
-    public void RefreshPlayerData()
+    public static void LoadPlayerCamera()
+    {
+        playerCamera = GameManager.Instance.PlayerCamera;
+        playerCamera?.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).ForEach(field => defaultPlayerCameraData[field.Name] = field.GetValue(playerCamera));
+    }
+
+    public static void RefreshPlayerData()
     {
         var refreshMethod = AccessTools.Method(typeof(PlayerStats), "CalculateAllStats");
         refreshMethod.Invoke(GameManager.Instance.PlayerStats, null);
+        WinchCore.Log.Debug("Re-calculated player stats.");
     }
 }
